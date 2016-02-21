@@ -17,7 +17,7 @@ public class MySingleton {
         mCtx = context;
         mRequestQueue = getRequestQueue();
 
-        ImageLoader mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(
+        mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(
                 LruBitmapCache.getCacheSize(mCtx)));
     }
 

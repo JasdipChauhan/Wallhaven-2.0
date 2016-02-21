@@ -20,7 +20,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private List<ListItems> listItemsList;
     private Context mContext;
     private ImageLoader mImageLoader;
-    private int focusedItem;
+    private int focusedItem = 0;
 
     public RecyclerAdapter (Context context, List<ListItems> listItemsList) {
         mContext = context;
@@ -60,7 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         holder.url.setText(Html.fromHtml(listItems.getUrl()));
     }
 
-    public void classAdapter() {
+    public void clearAdapter () {
         listItemsList.clear();
         notifyDataSetChanged();
     }
