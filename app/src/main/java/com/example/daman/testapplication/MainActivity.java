@@ -42,14 +42,15 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     private List<ListItems> listItemsList = new ArrayList<ListItems>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
-    private int counter = 1;
+    private int counter = 0;
     private String count;
     private String jsonSubReddit;
     private String after_id;
     private String next = "";
 
     private Context mContext;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialogWallpaper;
+    private ProgressDialog progressDialogLoadingMore;
     private String setURL;
 
     @Override
@@ -64,12 +65,21 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-
         updateList();
+
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                // do something...
+                updateList();
+            }
+        });
+
     }
 
     public void updateList() {
-        counter = 2;
+        showPD();
+        counter++;
         String url = beginning + counter;
         adapter = new RecyclerAdapter(MainActivity.this, listItemsList, this);
         mRecyclerView.setAdapter(adapter);
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-
+                hidePD();
                 try {
                     JSONObject pagination = response.getJSONObject("pagination");
                     after_id = pagination.getString("next");
@@ -108,13 +118,29 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                VolleyLog.d(TAG, "Error" + volleyError.getMessage());
+                VolleyLog.e(TAG, "Error" + volleyError.getMessage());
+                hidePD();
             }
         });
 
         queue.add(jsonObjectRequest);
 
+    }
+
+    private void showPD() {
+        if (progressDialogLoadingMore == null) {
+            progressDialogLoadingMore = new ProgressDialog(this);
+            progressDialogLoadingMore.setMessage("Loading more wallpapers...");
+            progressDialogLoadingMore.setCancelable(false);
+            progressDialogLoadingMore.show();
+        }
+    }
+
+    private void hidePD() {
+        if (progressDialogLoadingMore != null) {
+            progressDialogLoadingMore.dismiss();
+            progressDialogLoadingMore = null;
+        }
     }
 
     //perform the async task that helps with changing the device's wallpaper
@@ -141,10 +167,10 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setMessage("Setting Wallpaper...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            progressDialogWallpaper = new ProgressDialog(MainActivity.this);
+            progressDialogWallpaper.setMessage("Setting Wallpaper...");
+            progressDialogWallpaper.setCancelable(false);
+            progressDialogWallpaper.show();
         }
 
         @Override
@@ -154,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
             WallpaperManager wallpaperManager = WallpaperManager.getInstance(getBaseContext());
             try {
                 wallpaperManager.setBitmap(bitmap);
-                progressDialog.dismiss();
+                progressDialogWallpaper.dismiss();
                 Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -18,6 +18,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/network_image"
-        android:maxLines="0"
         android:text="url" />
 </RelativeLayout>
