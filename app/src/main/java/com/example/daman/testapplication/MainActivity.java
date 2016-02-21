@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     private static final String jsonEnd = "/.json";
     private static final String qCount = "?count=";
     private static final String after = "&after=";
-    private static final String beginning = "https://api.desktoppr.co/";
-    private static final String end = "/wallpapers";
+    private static final String beginning = "https://api.desktoppr.co/1/wallpapers?page=";
     private List<ListItems> listItemsList = new ArrayList<ListItems>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
@@ -70,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     }
 
     public void updateList() {
-        counter = 1;
-        String url = beginning + counter + end;
+        counter = 2;
+        String url = beginning + counter;
         adapter = new RecyclerAdapter(MainActivity.this, listItemsList, this);
         mRecyclerView.setAdapter(adapter);
 
@@ -118,30 +117,11 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
     }
 
+    //perform the async task that helps with changing the device's wallpaper
     @Override
     public void changeWallpaper(final String url) {
-
         new SetWallpaper().execute(url);
-
-        // setThread = new Thread(new Runnable() {
-
-        //   @Override
-        // public void run() {
-              /* try {
-
-                    WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
-                    wallpaperManager.setBitmap(Picasso.with(mContext).load(url)
-                            .get());
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }*/
-        //  });
-
-        //    setThread.start();
     }
-
 
     private class SetWallpaper extends AsyncTask<String, Void, Bitmap> {
 
