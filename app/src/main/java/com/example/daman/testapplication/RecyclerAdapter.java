@@ -1,17 +1,14 @@
 package com.example.daman.testapplication;
 
-import android.app.LauncherActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -55,10 +52,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         holder.itemView.setSelected(focusedItem == position);
 
         holder.getLayoutPosition();
+
+        mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
+
+        holder.thumbnail.setImageUrl(listItems.getThumbnail(), mImageLoader);
+        holder.thumbnail.setDefaultImageResId(R.drawable.reddit_placeholder);
+        holder.url.setText(Html.fromHtml(listItems.getUrl()));
+    }
+
+    public void classAdapter() {
+        listItemsList.clear();
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return (null != listItemsList ? listItemsList.size() : 0);
     }
 }
