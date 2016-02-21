@@ -1,6 +1,8 @@
 package com.example.daman.testapplication;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -21,25 +23,40 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private Context mContext;
     private ImageLoader mImageLoader;
     private int focusedItem = 0;
+    private CallbackInterface event;
 
-    public RecyclerAdapter (Context context, List<ListItems> listItemsList) {
+    public RecyclerAdapter(Context context, List<ListItems> listItemsList, CallbackInterface mCallback) {
+        event = mCallback;
         mContext = context;
         this.listItemsList = listItemsList;
     }
 
     @Override
     public ListViewRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from((parent.getContext())).inflate(R.layout.list_row, null);
-        ListViewRowHolder holder = new ListViewRowHolder(v);
+        View view = LayoutInflater.from((parent.getContext())).inflate(R.layout.list_row, null);
+        ListViewRowHolder holder = new ListViewRowHolder(view);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView redditUrl = (TextView) v.findViewById(R.id.url);
-                String postUrl = redditUrl.getText().toString();
-                //Intent i = new Intent(mContext, WebActivity.class);
-                //i.putExtra("url", postUrl);
-                //mContext.startActivity(i);
+                TextView url = (TextView) v.findViewById(R.id.url);
+                final String pictureURL = url.getText().toString();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Would you like to set this picture as your wallpaper?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                event.changeWallpaper(pictureURL);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.create();
+                builder.show();
             }
         });
 
