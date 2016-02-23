@@ -32,8 +32,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/network_image"
-                android:text="url"
-                android:maxLines="0"/>
+                android:text="url"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Resolution"
+                android:id="@+id/resolution"
+                android:layout_below="@+id/url"/>
 
         </RelativeLayout>
 

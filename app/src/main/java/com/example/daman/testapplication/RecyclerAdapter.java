@@ -3,6 +3,7 @@ package com.example.daman.testapplication;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -26,7 +27,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private ImageLoader mImageLoader;
     private int focusedItem = 0;
     private CallbackInterface event;
-    private CardView cardView;
+    private int colour;
+    private int r;
+    private int g;
+    private int b;
 
     public RecyclerAdapter(Context context, List<ListItems> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
@@ -76,9 +80,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
         mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
 
+
+
         holder.thumbnail.setImageUrl(listItems.getThumbnail(), mImageLoader);
         holder.thumbnail.setDefaultImageResId(R.drawable.reddit_placeholder);
         holder.url.setText(Html.fromHtml(listItems.getUrl()));
+        holder.cv.setBackgroundColor(Color.rgb(listItems.getR(), listItems.getG(), listItems.getB()));
+        //holder.cv.setBackgroundColor(Color.RED);
+        holder.resolution.setText(listItems.getResolution());
     }
 
     public void clearAdapter () {
@@ -90,4 +99,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     public int getItemCount() {
         return (null != listItemsList ? listItemsList.size() : 0);
     }
+
 }
