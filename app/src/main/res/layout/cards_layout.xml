@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="4dp"
     android:id="@+id/linLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
     >
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cv"
         >
 
         <RelativeLayout
@@ -21,8 +22,8 @@
                 android:id="@+id/network_image"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:maxHeight="300dp"
-                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 />
 
             <TextView
@@ -34,12 +35,12 @@
                 android:visibility="gone"/>
 
             <TextView
+                android:id="@+id/resolution"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/network_image"
                 android:layout_centerHorizontal="true"
                 android:text="Resolution"
-                android:id="@+id/resolution"
-                android:layout_below="@+id/network_image"
                 />
 
         </RelativeLayout>
