@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     private static final String qCount = "?count=";
     private static final String after = "&after=";
     private static final String beginning = "https://api.desktoppr.co/1/wallpapers?page=";
-    private List<ListItems> listItemsList = new ArrayList<ListItems>();
+    private List<ListItems> listItemsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private int counter = 0;
@@ -128,14 +128,17 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
                     for (int i = 0; i < dataResponse.length(); i++) {
 
-                        JSONObject post = dataResponse.getJSONObject(i).getJSONObject("image");
+                        JSONObject post = dataResponse.getJSONObject(i);
+                        JSONObject image = dataResponse.getJSONObject(i).getJSONObject("image");
                         JSONArray palette = dataResponse.getJSONObject(i).getJSONArray("palette");
-                        ListItems item = new ListItems();
+                        JSONObject thumb = image.getJSONObject("thumb");
 
+
+                        ListItems item = new ListItems();
                         item.setBackgroundColor(palette.get(0).toString());
-                        item.setUrl(post.getString("url"));
-                        JSONObject thumb = post.getJSONObject("thumb");
+                        item.setUrl(image.getString("url"));
                         item.setThumbnail(thumb.getString("url"));
+                        item.setResolution(post.getString("width") + " x " + post.getString("height"));
 
                         listItemsList.add(item);
                     }
@@ -185,8 +188,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         protected Bitmap doInBackground(String... params) {
 
             try {
-                Bitmap result = Picasso.with(mContext).load(params[0]).get();
-                return result;
+                return Picasso.with(mContext).load(params[0]).get();
             } catch (IOException e) {
                 e.printStackTrace();
             }
