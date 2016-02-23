@@ -6,11 +6,11 @@
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/network_image"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="100dp"
         android:maxWidth="100dp"
-        android:scaleType="fitXY"
+        android:scaleType="fitEnd"
         />
 
     <TextView

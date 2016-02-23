@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("Wallpapers");
+
         mContext = MainActivity.this;
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

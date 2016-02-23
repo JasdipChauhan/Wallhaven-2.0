@@ -78,12 +78,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
 
         holder.thumbnail.setImageUrl(listItems.getThumbnail(), mImageLoader);
-        holder.thumbnail.setDefaultImageResId(R.drawable.reddit_placeholder);
+        holder.thumbnail.setDefaultImageResId(R.drawable.placeholder);
         holder.url.setText(Html.fromHtml(listItems.getUrl()));
         holder.cv.setBackgroundColor(Color.rgb(listItems.getR(), listItems.getG(), listItems.getB()));
         //holder.cv.setBackgroundColor(Color.RED);
         holder.resolution.setText(listItems.getResolution());
-        holder.resolution.setTextColor(Color.RED);
+        holder.resolution.setTextColor(Color.WHITE);
     }
 
     public void clearAdapter () {

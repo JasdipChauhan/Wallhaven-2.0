@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="4dp"
     android:id="@+id/linLayout"
     >
 
@@ -14,16 +14,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="5dp"
             >
-
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/network_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="100dp"
-                android:maxWidth="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:maxHeight="300dp"
                 android:scaleType="fitXY"
                 />
 
@@ -32,7 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/network_image"
-                android:text="url"/>
+                android:text="url"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,7 +39,8 @@
                 android:layout_centerHorizontal="true"
                 android:text="Resolution"
                 android:id="@+id/resolution"
-                android:layout_below="@+id/url"/>
+                android:layout_below="@+id/network_image"
+                />
 
         </RelativeLayout>
 
