@@ -3,8 +3,10 @@ package com.example.daman.testapplication;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private ImageLoader mImageLoader;
     private int focusedItem = 0;
     private CallbackInterface event;
+    private CardView cardView;
 
     public RecyclerAdapter(Context context, List<ListItems> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
@@ -33,10 +36,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
     @Override
     public ListViewRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from((parent.getContext())).inflate(R.layout.list_row, null);
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_layout, null);
         ListViewRowHolder holder = new ListViewRowHolder(view);
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TextView url = (TextView) v.findViewById(R.id.url);

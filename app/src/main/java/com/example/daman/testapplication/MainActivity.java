@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     private ProgressDialog progressDialogLoadingMore;
     private String setURL;
 
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,13 +71,37 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         mRecyclerView.setLayoutManager(linearLayoutManager);
         updateList();
 
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            Log.v("...", "Last Item Wow !");
+                            updateList();
+                            //Do pagination.. i.e. fetch new data
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+
+        /*mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
                 // do something...
                 updateList();
             }
-        });
+        });*/
 
     }
 
@@ -99,10 +127,12 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
                     JSONArray dataResponse = response.getJSONArray("response");
 
                     for (int i = 0; i < dataResponse.length(); i++) {
-                        JSONObject post = dataResponse.getJSONObject(i).getJSONObject("image");
 
+                        JSONObject post = dataResponse.getJSONObject(i).getJSONObject("image");
+                        JSONArray palette = dataResponse.getJSONObject(i).getJSONArray("palette");
                         ListItems item = new ListItems();
 
+                        item.setBackgroundColor(palette.get(0).toString());
                         item.setUrl(post.getString("url"));
                         JSONObject thumb = post.getJSONObject("thumb");
                         item.setThumbnail(thumb.getString("url"));

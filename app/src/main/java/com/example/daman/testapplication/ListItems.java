@@ -7,6 +7,16 @@ public class ListItems {
 
     private String url;
     private String thumbnail;
+    private String backgroundColor;
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getBackgroundColor() {
+
+        return backgroundColor;
+    }
 
     public String getUrl() {
         return url;
