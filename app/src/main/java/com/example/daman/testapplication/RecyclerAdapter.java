@@ -54,12 +54,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
                                 event.changeWallpaper(pictureURL);
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        });
-                // Create the AlertDialog object and return it
+                        .setNegativeButton("Cancel", null);
                 builder.create();
                 builder.show();
             }
@@ -81,7 +76,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         holder.thumbnail.setDefaultImageResId(R.drawable.placeholder);
         holder.url.setText(Html.fromHtml(listItems.getUrl()));
         holder.cv.setBackgroundColor(Color.rgb(listItems.getR(), listItems.getG(), listItems.getB()));
-        //holder.cv.setBackgroundColor(Color.RED);
         holder.resolution.setText(listItems.getResolution());
         holder.resolution.setTextColor(Color.WHITE);
     }
