@@ -11,6 +11,8 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -28,6 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private int r;
     private int g;
     private int b;
+    private int lastPosition = -1;
 
     public RecyclerAdapter(Context context, List<ListItems> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
@@ -78,6 +81,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         holder.cv.setBackgroundColor(Color.rgb(listItems.getR(), listItems.getG(), listItems.getB()));
         holder.resolution.setText(listItems.getResolution());
         holder.resolution.setTextColor(Color.WHITE);
+
+        setAnimation(holder.itemView, position);
     }
 
     public void clearAdapter () {
@@ -88,6 +93,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     @Override
     public int getItemCount() {
         return (null != listItemsList ? listItemsList.size() : 0);
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
 }
