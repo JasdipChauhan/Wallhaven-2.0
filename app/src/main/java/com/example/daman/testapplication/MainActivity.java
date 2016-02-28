@@ -25,15 +25,10 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     private List<ListItems> listItemsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
-    private int counter = 0;
-
 
     private Context mContext;
-    //private ProgressDialog progressDialogWallpaper;
-    //private ProgressDialog progressDialogLoadingMore;
     private String after_id;
     private VolleyRequests vr;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         mRecyclerView.setAdapter(adapter);
 
 
-        vr = new VolleyRequests(MainActivity.this, adapter, listItemsList);
+        vr = VolleyRequests.getInstance(MainActivity.this, adapter, listItemsList);
         vr.updateList();
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {

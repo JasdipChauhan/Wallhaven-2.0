@@ -30,10 +30,20 @@ public class VolleyRequests {
     private List<ListItems> listItemsList;
     private RecyclerAdapter adapter;
     private int counter = 0;
+    private static VolleyRequests vr;
 
     private Random generator = new Random();
 
-    public VolleyRequests(Context context, RecyclerAdapter adapter, List<ListItems> listItemsList) {
+    public static VolleyRequests getInstance(Context context, RecyclerAdapter adapter, List<ListItems> listItemsList) {
+        if (vr == null) {
+            vr = new VolleyRequests(context, adapter, listItemsList);
+            return vr;
+        } else {
+            return vr;
+        }
+    }
+
+    private VolleyRequests(Context context, RecyclerAdapter adapter, List<ListItems> listItemsList) {
         this.context = context;
         this.adapter = adapter;
         this.listItemsList = listItemsList;
@@ -45,8 +55,6 @@ public class VolleyRequests {
         final String url = beginning + counter;
 
         RequestQueue queue = Volley.newRequestQueue(context);
-
-        adapter.clearAdapter();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -71,7 +79,7 @@ public class VolleyRequests {
                         item.setThumbnail(thumb.getString("url"));
                         item.setResolution(post.getString("width") + " x " + post.getString("height"));
 
-                        listItemsList.add(item);
+                        adapter.add(item);
                     }
 
                 } catch (JSONException e) {

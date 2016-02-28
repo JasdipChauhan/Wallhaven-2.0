@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +86,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     public void clearAdapter () {
         listItemsList.clear();
         notifyDataSetChanged();
+    }
+
+    public void add(ListItems li) {
+        listItemsList.add(li);
+        this.notifyItemInserted(listItemsList.size() - 1);
     }
 
     @Override
