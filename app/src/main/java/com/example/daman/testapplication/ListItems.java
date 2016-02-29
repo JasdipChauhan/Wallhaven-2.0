@@ -1,8 +1,5 @@
 package com.example.daman.testapplication;
 
-/**
- * Created by Daman on 2/15/2016.
- */
 public class ListItems {
 
     private String url;
@@ -19,7 +16,7 @@ public class ListItems {
         int color = (int)Long.parseLong(backgroundColor, 16);
         r = (color >> 16) & 0xFF;
         g = (color >> 8) & 0xFF;
-        b = (color >> 0) & 0xFF;
+        b = (color) & 0xFF;
     }
 
     public String getBackgroundColor() {

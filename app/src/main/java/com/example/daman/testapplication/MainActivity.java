@@ -69,17 +69,6 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         return ContextCompat.getColor(mContext, R.color.colorAccent);
     }
 
-    /*private int fetchAccentColor() {
-        TypedValue typedValue = new TypedValue();
-
-        TypedArray a = mContext.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
-        int color = a.getColor(0, 0);
-
-        a.recycle();
-
-        return color;
-    }*/
-
     private class SetWallpaper extends AsyncTask<String, Void, Bitmap> {
 
         @Override
