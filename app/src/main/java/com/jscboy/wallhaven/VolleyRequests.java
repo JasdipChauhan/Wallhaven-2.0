@@ -49,8 +49,10 @@ public class VolleyRequests {
         this.listItemsList = listItemsList;
     }
 
-    public void updateList() {
-        showPD();
+    public void updateList(boolean toShowPD) {
+        if (!toShowPD) {
+            showPD();
+        }
         counter = generator.nextInt(1000) + 1;
         final String url = beginning + counter;
 
@@ -97,6 +99,10 @@ public class VolleyRequests {
 
         queue.add(jsonObjectRequest);
 
+    }
+
+    public void clearList() {
+        adapter.clearAdapter();
     }
 
     public void showPD() {
