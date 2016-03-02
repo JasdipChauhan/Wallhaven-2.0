@@ -31,6 +31,7 @@ public class VolleyRequests {
     private RecyclerAdapter adapter;
     private int counter = 0;
     private static VolleyRequests vr;
+    private int size = 0;
 
     private Random generator = new Random();
 
@@ -49,10 +50,9 @@ public class VolleyRequests {
         this.listItemsList = listItemsList;
     }
 
-    public void updateList(boolean toShowPD) {
-        if (!toShowPD) {
-            showPD();
-        }
+    public synchronized void updateList() {
+
+        showPD();
         counter = generator.nextInt(1000) + 1;
         final String url = beginning + counter;
 
@@ -82,6 +82,7 @@ public class VolleyRequests {
                         item.setResolution(post.getString("width") + " x " + post.getString("height"));
 
                         adapter.add(item);
+                        size = adapter.getItemCount();
                     }
 
                 } catch (JSONException e) {
@@ -103,6 +104,8 @@ public class VolleyRequests {
 
     public void clearList() {
         adapter.clearAdapter();
+        adapter.notifyItemRangeRemoved(0, size);
+        size = 0;
     }
 
     public void showPD() {
@@ -118,6 +121,8 @@ public class VolleyRequests {
         if (progressDialogLoadingMore != null) {
             progressDialogLoadingMore.dismiss();
             progressDialogLoadingMore = null;
+        } else {
+            Log.i("progressDialog", "it is null");
         }
     }
 

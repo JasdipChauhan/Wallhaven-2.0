@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
 
         vr = VolleyRequests.getInstance(MainActivity.this, adapter, listItemsList);
-        vr.updateList(true);
+        vr.updateList();
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
-                vr.updateList(true);
+                vr.updateList();
             }
         });
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
             @Override
             public void onRefresh() {
                 vr.clearList();
-                vr.updateList(false);
+                vr.updateList();
                 swipeRefresh.setRefreshing(false);
             }
         });
