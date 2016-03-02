@@ -5,10 +5,10 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.example.daman.testapplication"
+        applicationId "com.jscboy.wallhaven"
         minSdkVersion 22
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName "2.0"
     }
     buildTypes {
