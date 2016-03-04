@@ -57,14 +57,14 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
-            public void onLoadMore(int current_page) {
+            public synchronized void onLoadMore(int current_page) {
                 vr.updateList();
             }
         });
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public synchronized void onRefresh() {
                 vr.clearList();
                 vr.updateList();
                 swipeRefresh.setRefreshing(false);
