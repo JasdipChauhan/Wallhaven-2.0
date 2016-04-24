@@ -71,9 +71,9 @@ public class VolleyRequests {
                     for (int i = 0; i < dataResponse.length(); i++) {
 
                         JSONObject post = dataResponse.getJSONObject(i);
-                        JSONObject image = dataResponse.getJSONObject(i).getJSONObject("image");
-                        JSONArray palette = dataResponse.getJSONObject(i).getJSONArray("palette");
-                        JSONObject thumb = image.getJSONObject("thumb");
+                        JSONObject image = post.getJSONObject("image");
+                        JSONArray palette = post.getJSONArray("palette");
+                        JSONObject thumb = image.getJSONObject("preview");
 
                         ListItems item = new ListItems();
                         item.setBackgroundColor(palette.get(0).toString());
