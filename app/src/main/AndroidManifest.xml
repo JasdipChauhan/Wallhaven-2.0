@@ -5,7 +5,7 @@
     android:versionName="2.1">
 
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.jscboy.wallhaven.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

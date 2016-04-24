@@ -2,6 +2,7 @@ package com.jscboy.wallhaven;
 
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Wallpapers");
+
+        ///TESTING PURPOSES
+        Intent i = new Intent(this, NavigationActivity.class);
+        startActivity(i);
+        //
 
         mContext = MainActivity.this;
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
