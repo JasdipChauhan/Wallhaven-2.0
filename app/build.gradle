@@ -30,5 +30,6 @@ dependencies {
     compile 'com.android.support:palette-v7:+'
     compile 'com.android.support:support-v4:+'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
+    compile 'com.google.android.gms:play-services-ads:8.4.+'
     compile files('libs/picasso-2.5.2.jar')
 }
