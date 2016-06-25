@@ -56,9 +56,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
             public void onClick(View v) {
 
                 if (setWallpaperButton.getVisibility() == View.INVISIBLE) {
-                    expand(setWallpaperButton);
+                    expand(setWallpaperButton, saveButton);
                 } else {
-                    collapse(setWallpaperButton);
+                    collapse(setWallpaperButton, saveButton);
                 }
 
                 /*TextView url = (TextView) v.findViewById(R.id.url);
@@ -80,19 +80,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         return holder;
     }
 
-    private void expand(Button setWallpaperButton) {
+    private void expand(Button setbutton, Button saveButton) {
         //set Visible
         Toast.makeText(mContext, "expanding needed", Toast.LENGTH_SHORT).show();
-        setWallpaperButton.setVisibility(View.VISIBLE);
+        setbutton.setVisibility(View.VISIBLE);
         saveButton.setVisibility(View.VISIBLE);
 
         final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        setWallpaperButton.measure(widthSpec, heightSpec);
+        setbutton.measure(widthSpec, heightSpec);
 
-        ValueAnimator mAnimator = slideAnimator(0, setWallpaperButton.getMeasuredHeight(), setWallpaperButton);
+        ValueAnimator mAnimator = slideAnimator(0, setbutton.getMeasuredHeight(), setbutton);
         mAnimator.start();
     }
+
+    private void collapse(Button setButton, Button saveButton) {
+        int finalHeight = setButton.getHeight();
+
+        ValueAnimator mAnimator = slideAnimator(finalHeight, 0, setButton);
+
+        mAnimator.start();
+    }
+
 
     private ValueAnimator slideAnimator(int start, int end, final TextView view) {
 
