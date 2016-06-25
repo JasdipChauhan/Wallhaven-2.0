@@ -10,12 +10,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.jscboy.wallhaven.CallbackInterface;
+import com.jscboy.wallhaven.ListItems;
 import com.jscboy.wallhaven.R;
+import com.jscboy.wallhaven.RecyclerAdapter;
+import com.jscboy.wallhaven.VolleyRequests;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -43,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Wallpapers");
-
-        ///TESTING PURPOSES
-        Intent i = new Intent(this, NavigationActivity.class);
-        startActivity(i);
-        //
 
         mContext = MainActivity.this;
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);

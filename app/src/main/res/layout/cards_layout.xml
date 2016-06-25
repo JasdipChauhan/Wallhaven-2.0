@@ -43,6 +43,29 @@
                 android:text="Resolution"
                 />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/setWallpaperButton"
+                android:text="Set Wallpaper"
+                android:background="@color/colorAccent"
+                android:padding="8dp"
+                android:layout_below="@+id/resolution"
+                android:visibility="invisible"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/saveButton"
+                android:text="Save"
+                android:background="@color/colorAccent"
+                android:padding="8dp"
+                android:layout_below="@+id/resolution"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                />
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
