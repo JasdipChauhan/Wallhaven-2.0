@@ -8,9 +8,9 @@ public class DBManager extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "wallpapers.db";
-    private static final String TABLE_PROPERTIES = "properties";
-    private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_WALLPAPERURL = "wallpaperURL";
+    public static final String TABLE_PROPERTIES = "properties";
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_WALLPAPERURL = "wallpaperURL";
 
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -28,6 +28,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROPERTIES);
+        onCreate(db);
     }
 }
