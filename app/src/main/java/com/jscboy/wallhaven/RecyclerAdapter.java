@@ -48,20 +48,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_layout, null);
         ListViewRowHolder holder = new ListViewRowHolder(view);
 
-        setWallpaperButton = (Button) view.findViewById(R.id.setWallpaperButton);
-        saveButton = (Button) view.findViewById(R.id.saveButton);
-
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (setWallpaperButton.getVisibility() == View.INVISIBLE) {
-                    expand(setWallpaperButton, saveButton);
-                } else {
-                    collapse(setWallpaperButton, saveButton);
-                }
-
-                /*TextView url = (TextView) v.findViewById(R.id.url);
+                TextView url = (TextView) v.findViewById(R.id.url);
                 final String pictureURL = url.getText().toString();
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -73,51 +64,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
                         })
                         .setNegativeButton("Cancel", null);
                 builder.create();
-                builder.show();*/
+                builder.show();
             }
         });
 
         return holder;
-    }
-
-    private void expand(Button setbutton, Button saveButton) {
-        //set Visible
-        Toast.makeText(mContext, "expanding needed", Toast.LENGTH_SHORT).show();
-        setbutton.setVisibility(View.VISIBLE);
-        saveButton.setVisibility(View.VISIBLE);
-
-        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        setbutton.measure(widthSpec, heightSpec);
-
-        ValueAnimator mAnimator = slideAnimator(0, setbutton.getMeasuredHeight(), setbutton);
-        mAnimator.start();
-    }
-
-    private void collapse(Button setButton, Button saveButton) {
-        int finalHeight = setButton.getHeight();
-
-        ValueAnimator mAnimator = slideAnimator(finalHeight, 0, setButton);
-
-        mAnimator.start();
-    }
-
-
-    private ValueAnimator slideAnimator(int start, int end, final TextView view) {
-
-        ValueAnimator animator = ValueAnimator.ofInt(start, end);
-
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                //Update Height
-                int value = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-                layoutParams.height = value;
-                view.setLayoutParams(layoutParams);
-            }
-        });
-        return animator;
     }
 
     @Override
@@ -137,14 +88,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         holder.resolution.setTextColor(Color.WHITE);
 
         setAnimation(holder.itemView, position);
-
-
-        setWallpaperButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "setwallpaperclicked", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void clearAdapter () {

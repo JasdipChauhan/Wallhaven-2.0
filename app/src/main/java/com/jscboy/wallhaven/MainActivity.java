@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     private String after_id;
     private VolleyRequests vr;
 
+    private DBManager dbHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         mRecyclerView.setLayoutManager(linearLayoutManager);
         adapter = new RecyclerAdapter(MainActivity.this, listItemsList, this);
         mRecyclerView.setAdapter(adapter);
+
+        dbHandler = new DBManager(mContext, null, null, 1);
 
 
         vr = VolleyRequests.getInstance(MainActivity.this, adapter, listItemsList);
