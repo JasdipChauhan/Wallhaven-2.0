@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         });
 
         //porting over to a navigation drawer
-        Intent i = new Intent(this, NavigationActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(this, NavigationActivity.class);
+        //startActivity(i);
     }
 
     //perform the async task that helps with changing the device's wallpaper

@@ -12,4 +12,6 @@
     tools:context=".Activities.NavigationActivity"
     tools:showIn="@layout/app_bar_navigation">
 
+    <include layout="@layout/content_main" />
+
 </RelativeLayout>
