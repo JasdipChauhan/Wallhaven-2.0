@@ -2,6 +2,7 @@ package com.jscboy.wallhaven.Singletons;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -129,14 +130,15 @@ public class VolleyRequests {
     }
 
     public void preLoad() {
-        progressDialogWallpaper = new ProgressDialog(context);
-        progressDialogWallpaper.setMessage("Setting Wallpaper...");
-        progressDialogWallpaper.setCancelable(false);
-        progressDialogWallpaper.show();
+
+        //progressDialogWallpaper = new ProgressDialog(context);
+        //progressDialogWallpaper.setMessage("Setting Wallpaper...");
+        //progressDialogWallpaper.setCancelable(false);
+        //progressDialogWallpaper.show();
     }
 
     public void postLoad() {
-        progressDialogWallpaper.dismiss();
+        //progressDialogWallpaper.dismiss();
     }
 
 }

@@ -12,11 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Libraries.EndlessRecyclerOnScrollListener;
 import com.jscboy.wallhaven.Models.ListItems;
+import com.jscboy.wallhaven.Models.WallpaperProperties;
 import com.jscboy.wallhaven.R;
 import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
 import com.jscboy.wallhaven.Singletons.VolleyRequests;
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
         dbHandler = new DBManager(mContext, null, null, 1);
 
-
         vr = VolleyRequests.getInstance(MainActivity.this, adapter, listItemsList);
         vr.updateList();
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     //perform the async task that helps with changing the device's wallpaper
     @Override
     public void changeWallpaper(final String url) {
+        dbHandler.addWallpaper(new WallpaperProperties(url));
         new SetWallpaper().execute(url);
     }
 
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Snackbar.make(findViewById(R.id.linLayout), "Changing your wallpaper...",
+                    Snackbar.LENGTH_SHORT).show();
             vr.preLoad();
         }
 
@@ -118,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
             try {
                 wallpaperManager.setBitmap(bitmap);
                 vr.postLoad();
-                Snackbar.make(findViewById(R.id.linLayout), "Successfully Changed Wallpaper!",
-                        Snackbar.LENGTH_SHORT).setActionTextColor(fetchAccentColor()).show();
+                Snackbar.make(findViewById(R.id.linLayout), "Enjoy!",
+                        Snackbar.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
