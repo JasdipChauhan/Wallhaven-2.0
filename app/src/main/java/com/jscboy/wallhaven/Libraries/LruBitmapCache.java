@@ -1,4 +1,4 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Libraries;
 
 import android.content.Context;
 import android.graphics.Bitmap;

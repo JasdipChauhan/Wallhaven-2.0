@@ -1,4 +1,4 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Models;
 
 public class ListItems {
 

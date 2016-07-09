@@ -1,8 +1,7 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Activities;
 
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,17 +9,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
-import com.jscboy.wallhaven.CallbackInterface;
-import com.jscboy.wallhaven.ListItems;
+import com.jscboy.wallhaven.Interfaces.CallbackInterface;
+import com.jscboy.wallhaven.Database.DBManager;
+import com.jscboy.wallhaven.Libraries.EndlessRecyclerOnScrollListener;
+import com.jscboy.wallhaven.Models.ListItems;
 import com.jscboy.wallhaven.R;
-import com.jscboy.wallhaven.RecyclerAdapter;
-import com.jscboy.wallhaven.VolleyRequests;
+import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
+import com.jscboy.wallhaven.Singletons.VolleyRequests;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;

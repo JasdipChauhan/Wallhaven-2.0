@@ -1,6 +1,5 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Adapters;
 
-import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,9 +13,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.jscboy.wallhaven.Interfaces.CallbackInterface;
+import com.jscboy.wallhaven.Models.ListItems;
+import com.jscboy.wallhaven.Singletons.MySingleton;
 import com.jscboy.wallhaven.R;
 
 import java.util.List;

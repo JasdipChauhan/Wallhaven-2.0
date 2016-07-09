@@ -1,4 +1,4 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

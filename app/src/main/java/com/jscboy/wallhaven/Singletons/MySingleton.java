@@ -1,4 +1,4 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Singletons;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.jscboy.wallhaven.Libraries.LruBitmapCache;
 
 public class MySingleton {
     private static MySingleton mInstance;

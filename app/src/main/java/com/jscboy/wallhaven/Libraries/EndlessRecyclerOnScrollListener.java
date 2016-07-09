@@ -1,4 +1,4 @@
-package com.jscboy.wallhaven;
+package com.jscboy.wallhaven.Libraries;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
