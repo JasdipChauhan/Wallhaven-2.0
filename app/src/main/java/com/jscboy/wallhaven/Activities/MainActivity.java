@@ -2,6 +2,7 @@ package com.jscboy.wallhaven.Activities;
 
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,13 +14,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Libraries.EndlessRecyclerOnScrollListener;
 import com.jscboy.wallhaven.Models.ListItems;
-import com.jscboy.wallhaven.Models.WallpaperProperties;
 import com.jscboy.wallhaven.R;
 import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
 import com.jscboy.wallhaven.Singletons.VolleyRequests;
@@ -61,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         adapter = new RecyclerAdapter(MainActivity.this, listItemsList, this);
         mRecyclerView.setAdapter(adapter);
 
-        dbHandler = new DBManager(mContext, null, null, 1);
-
         vr = VolleyRequests.getInstance(MainActivity.this, adapter, listItemsList);
         vr.updateList();
 
@@ -81,13 +78,15 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
                 swipeRefresh.setRefreshing(false);
             }
         });
+
+        //porting over to a navigation drawer
+        Intent i = new Intent(this, NavigationActivity.class);
+        startActivity(i);
     }
 
     //perform the async task that helps with changing the device's wallpaper
     @Override
     public void changeWallpaper(final String url) {
-        dbHandler.addWallpaper(new WallpaperProperties(url));
-        Log.i("db url", dbHandler.dbToString());
         new SetWallpaper().execute(url);
     }
 

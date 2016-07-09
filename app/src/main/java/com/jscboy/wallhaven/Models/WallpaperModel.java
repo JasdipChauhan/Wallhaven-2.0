@@ -1,16 +1,22 @@
 package com.jscboy.wallhaven.Models;
 
 
-public class WallpaperProperties {
+import com.android.volley.toolbox.NetworkImageView;
+
+public class WallpaperModel {
 
     private int _id;
     private String _wallpaperURL;
+    private NetworkImageView thumbnail;
+    private String resolution;
 
-    public WallpaperProperties(String wallpaperURL) {
-        this._wallpaperURL = wallpaperURL;
+    public WallpaperModel(String _wallpaperURL) {
+        this._wallpaperURL = _wallpaperURL;
+       //this.resolution = resolution;
+        //this.thumbnail = thumbnail;
     }
 
-    public WallpaperProperties() {
+    public WallpaperModel() {
     }
 
     public int get_id() {

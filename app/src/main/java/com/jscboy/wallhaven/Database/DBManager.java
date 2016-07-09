@@ -5,9 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.jscboy.wallhaven.Models.WallpaperProperties;
+import com.jscboy.wallhaven.Models.WallpaperModel;
 
 public class DBManager extends SQLiteOpenHelper {
 
@@ -38,7 +37,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     //add wallpaper to db
-    public void addWallpaper(WallpaperProperties wallpaper) {
+    public void addWallpaper(WallpaperModel wallpaper) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_WALLPAPERURL, wallpaper.get_wallpaperURL());
         SQLiteDatabase db = getWritableDatabase();

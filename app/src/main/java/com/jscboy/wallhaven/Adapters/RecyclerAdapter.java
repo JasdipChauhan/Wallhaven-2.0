@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Models.ListItems;
+import com.jscboy.wallhaven.Models.WallpaperModel;
 import com.jscboy.wallhaven.Singletons.MySingleton;
 import com.jscboy.wallhaven.R;
 
@@ -34,13 +36,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private int g;
     private int b;
     private int lastPosition = -1;
-    private Button setWallpaperButton;
-    private Button saveButton;
+    private DBManager dbManager;
 
     public RecyclerAdapter(Context context, List<ListItems> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
         mContext = context;
         this.listItemsList = listItemsList;
+        dbManager = new DBManager(context, null, null, 1);
     }
 
     @Override
@@ -53,14 +55,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
             @Override
             public void onClick(View v) {
 
-                TextView url = (TextView) v.findViewById(R.id.url);
-                final String pictureURL = url.getText().toString();
+                TextView urlTV = (TextView) v.findViewById(R.id.url);
+                TextView resolutionTV = (TextView) v.findViewById(R.id.resolution);
+                NetworkImageView thumbnail = (NetworkImageView) v.findViewById(R.id.network_image);
+
+                final String url = urlTV.getText().toString();
+                final String resolution = resolutionTV.getText().toString();
+
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Would you like to set this picture as your wallpaper?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                event.changeWallpaper(pictureURL);
+                                dbManager.addWallpaper(new WallpaperModel(url));
+                                event.changeWallpaper(url);
                             }
                         })
                         .setNegativeButton("Cancel", null);
