@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
     @Override
     public void changeWallpaper(final String url) {
         dbHandler.addWallpaper(new WallpaperProperties(url));
+        Log.i("db url", dbHandler.dbToString());
         new SetWallpaper().execute(url);
     }
 
