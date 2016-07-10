@@ -10,7 +10,7 @@
             android:id="@+id/nav_save"
             android:icon="@drawable/ic_bookmark_black_24dp"
             android:title="Saved" />
-    </group>
+
 
     <item android:title="Leave some Feedback!">
         <menu>
@@ -20,5 +20,7 @@
                 android:title="Rate" />
         </menu>
     </item>
+
+    </group>
 
 </menu>
