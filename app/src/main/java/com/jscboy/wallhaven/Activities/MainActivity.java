@@ -16,7 +16,7 @@ import android.support.v7.widget.Toolbar;
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Libraries.EndlessRecyclerOnScrollListener;
-import com.jscboy.wallhaven.Models.ListItems;
+import com.jscboy.wallhaven.Models.WallpaperModel;
 import com.jscboy.wallhaven.R;
 import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
 import com.jscboy.wallhaven.Singletons.VolleyRequests;
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
     public static final String TAG = "MyRecyclerList";
     private static final String beginning = "https://api.desktoppr.co/1/wallpapers?page=";
-    private List<ListItems> retrievedWallpapersList = new ArrayList<>();
-    private List<ListItems> savedWallpapersList=  new ArrayList<>();
+    private List<WallpaperModel> retrievedWallpapersList = new ArrayList<>();
+    private List<WallpaperModel> savedWallpapersList=  new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;

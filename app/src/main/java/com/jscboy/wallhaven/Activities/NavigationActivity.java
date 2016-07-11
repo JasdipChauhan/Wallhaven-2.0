@@ -5,13 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +23,7 @@ import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
 import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Libraries.EndlessRecyclerOnScrollListener;
-import com.jscboy.wallhaven.Models.ListItems;
+import com.jscboy.wallhaven.Models.WallpaperModel;
 import com.jscboy.wallhaven.R;
 import com.jscboy.wallhaven.Singletons.VolleyRequests;
 import com.squareup.picasso.Picasso;
@@ -40,7 +38,7 @@ public class NavigationActivity extends AppCompatActivity
 
     public static final String TAG = "MyRecyclerList";
     private static final String beginning = "https://api.desktoppr.co/1/wallpapers?page=";
-    private List<ListItems> listItemsList = new ArrayList<>();
+    private List<WallpaperModel> listItemsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
@@ -49,7 +47,7 @@ public class NavigationActivity extends AppCompatActivity
     private String after_id;
     private VolleyRequests vr;
 
-    private DBManager dbHandler;
+    private DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

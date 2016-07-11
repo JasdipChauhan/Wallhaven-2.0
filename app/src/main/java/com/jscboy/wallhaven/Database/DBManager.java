@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.jscboy.wallhaven.Models.ListItems;
 import com.jscboy.wallhaven.Models.WallpaperModel;
+
+import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
@@ -49,7 +50,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     //add wallpaper to db
-    public void addWallpaper(ListItems wallpaper) {
+    public void addWallpaper(WallpaperModel wallpaper) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_WALLPAPERURL, wallpaper.getUrl());
         values.put(COLUMN_THUMBNAILURL, wallpaper.getThumbnail());
@@ -70,29 +71,39 @@ public class DBManager extends SQLiteOpenHelper {
                 + wallpaperURl + "\";");
     }
 
-    //helper function to output db results
-    public String dbToString() {
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
+    //retrieving the saved wallpapers in the database so the list can be inputted into the adapter with ease
+    public ArrayList<WallpaperModel> getSavedWallpapers() {
+
+        SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_PROPERTIES + " WHERE 1";
+        WallpaperModel wallpaperCursor;
 
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
 
+        ArrayList<WallpaperModel> savedWallpapers = new ArrayList<>();
+
         while (!cursor.isAfterLast()) {
 
-            String cursorString = cursor.getString(cursor.getColumnIndex("wallpaperURL"));
+            String url = cursor.getString(cursor.getColumnIndex(COLUMN_WALLPAPERURL));
+            String thumbnail = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAILURL));
+            String resolution = cursor.getString(cursor.getColumnIndex(COLUMN_RESOLUTION));
+            String r = cursor.getString(cursor.getColumnIndex(COLUMN_R));
+            String g = cursor.getString(cursor.getColumnIndex(COLUMN_G));
+            String b = cursor.getString(cursor.getColumnIndex(COLUMN_B));
 
-            if (cursorString != null) {
-                dbString += cursorString;
-                dbString += "\n";
+            if (url != null && thumbnail != null && resolution != null && r != null && g != null && b != null) {
+                int intR = Integer.parseInt(r);
+                int intG = Integer.parseInt(g);
+                int intB = Integer.parseInt(b);
+
+                wallpaperCursor = new WallpaperModel(url, thumbnail, resolution, intR, intG, intB);
+                savedWallpapers.add(wallpaperCursor);
             }
             cursor.moveToNext();
         }
 
-        db.close();
-
-        return dbString;
+        return savedWallpapers;
     }
 
 }

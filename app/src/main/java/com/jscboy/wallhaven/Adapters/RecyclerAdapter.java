@@ -17,7 +17,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
-import com.jscboy.wallhaven.Models.ListItems;
 import com.jscboy.wallhaven.Models.WallpaperModel;
 import com.jscboy.wallhaven.Singletons.MySingleton;
 import com.jscboy.wallhaven.R;
@@ -26,7 +25,7 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
-    private List<ListItems> listItemsList;
+    private List<WallpaperModel> listItemsList;
     private Context mContext;
     private ImageLoader mImageLoader;
     private int focusedItem = 0;
@@ -38,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private int lastPosition = -1;
     private DBManager dbManager;
 
-    public RecyclerAdapter(Context context, List<ListItems> listItemsList, CallbackInterface mCallback) {
+    public RecyclerAdapter(Context context, List<WallpaperModel> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
         mContext = context;
         this.listItemsList = listItemsList;
@@ -51,6 +50,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_layout, null);
         ListViewRowHolder holder = new ListViewRowHolder(view);
 
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(ListViewRowHolder holder, int position) {
+        final WallpaperModel wallpaperItem = listItemsList.get(position);
+        holder.itemView.setSelected(focusedItem == position);
+
+        holder.getLayoutPosition();
+
+
+        mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
+
+        holder.thumbnail.setImageUrl(wallpaperItem.getThumbnail(), mImageLoader);
+        holder.thumbnail.setDefaultImageResId(R.drawable.placeholder);
+        holder.url.setText(Html.fromHtml(wallpaperItem.getUrl()));
+        holder.cv.setBackgroundColor(Color.rgb(wallpaperItem.getR(), wallpaperItem.getG(), wallpaperItem.getB()));
+        holder.resolution.setText(wallpaperItem.getResolution());
+        holder.resolution.setTextColor(Color.WHITE);
+
+        setAnimation(holder.itemView, position);
+
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,12 +83,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
                 final String url = urlTV.getText().toString();
                 final String resolution = resolutionTV.getText().toString();
 
-
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Would you like to set this picture as your wallpaper?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                dbManager.addWallpaper(new WallpaperModel(url));
+                                dbManager.addWallpaper(wallpaperItem);
                                 event.changeWallpaper(url);
                             }
                         })
@@ -76,27 +96,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
                 builder.show();
             }
         });
-
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(ListViewRowHolder holder, int position) {
-        ListItems listItems = listItemsList.get(position);
-        holder.itemView.setSelected(focusedItem == position);
-
-        holder.getLayoutPosition();
-
-        mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
-
-        holder.thumbnail.setImageUrl(listItems.getThumbnail(), mImageLoader);
-        holder.thumbnail.setDefaultImageResId(R.drawable.placeholder);
-        holder.url.setText(Html.fromHtml(listItems.getUrl()));
-        holder.cv.setBackgroundColor(Color.rgb(listItems.getR(), listItems.getG(), listItems.getB()));
-        holder.resolution.setText(listItems.getResolution());
-        holder.resolution.setTextColor(Color.WHITE);
-
-        setAnimation(holder.itemView, position);
     }
 
     public void clearAdapter () {
@@ -104,7 +103,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         notifyDataSetChanged();
     }
 
-    public void add(ListItems li) {
+    public void add(WallpaperModel li) {
         listItemsList.add(li);
         this.notifyItemInserted(listItemsList.size() - 1);
     }

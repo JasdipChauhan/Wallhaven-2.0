@@ -2,7 +2,6 @@ package com.jscboy.wallhaven.Singletons;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -13,7 +12,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
-import com.jscboy.wallhaven.Models.ListItems;
+import com.jscboy.wallhaven.Models.WallpaperModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +29,7 @@ public class VolleyRequests {
     private Context context;
     private ProgressDialog progressDialogWallpaper;
     private ProgressDialog progressDialogLoadingMore;
-    private List<ListItems> listItemsList;
+    private List<WallpaperModel> listItemsList;
     private RecyclerAdapter adapter;
     private int counter = 0;
     private static VolleyRequests vr;
@@ -38,7 +37,7 @@ public class VolleyRequests {
 
     private Random generator = new Random();
 
-    public static VolleyRequests getInstance(Context context, RecyclerAdapter adapter, List<ListItems> listItemsList) {
+    public static VolleyRequests getInstance(Context context, RecyclerAdapter adapter, List<WallpaperModel> listItemsList) {
         if (vr == null) {
             vr = new VolleyRequests(context, adapter, listItemsList);
             return vr;
@@ -47,7 +46,7 @@ public class VolleyRequests {
         }
     }
 
-    private VolleyRequests(Context context, RecyclerAdapter adapter, List<ListItems> listItemsList) {
+    private VolleyRequests(Context context, RecyclerAdapter adapter, List<WallpaperModel> listItemsList) {
         this.context = context;
         this.adapter = adapter;
         this.listItemsList = listItemsList;
@@ -78,7 +77,7 @@ public class VolleyRequests {
                         JSONArray palette = post.getJSONArray("palette");
                         JSONObject thumb = image.getJSONObject("preview");
 
-                        ListItems item = new ListItems();
+                        WallpaperModel item = new WallpaperModel();
                         item.setBackgroundColor(palette.get(0).toString());
                         item.setUrl(image.getString("url"));
                         item.setThumbnail(thumb.getString("url"));
