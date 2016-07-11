@@ -52,6 +52,7 @@ public class DBManager extends SQLiteOpenHelper {
     //add wallpaper to db
     public void addWallpaper(WallpaperModel wallpaper) {
         ContentValues values = new ContentValues();
+        values.put(COLUMN_ID, 1);
         values.put(COLUMN_WALLPAPERURL, wallpaper.getUrl());
         values.put(COLUMN_THUMBNAILURL, wallpaper.getThumbnail());
         values.put(COLUMN_RESOLUTION, wallpaper.getResolution());
@@ -74,8 +75,8 @@ public class DBManager extends SQLiteOpenHelper {
     //retrieving the saved wallpapers in the database so the list can be inputted into the adapter with ease
     public ArrayList<WallpaperModel> getSavedWallpapers() {
 
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_PROPERTIES + " WHERE 1";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_PROPERTIES;
         WallpaperModel wallpaperCursor;
 
         Cursor cursor = db.rawQuery(query, null);
@@ -96,12 +97,13 @@ public class DBManager extends SQLiteOpenHelper {
                 int intR = Integer.parseInt(r);
                 int intG = Integer.parseInt(g);
                 int intB = Integer.parseInt(b);
-
                 wallpaperCursor = new WallpaperModel(url, thumbnail, resolution, intR, intG, intB);
                 savedWallpapers.add(wallpaperCursor);
             }
             cursor.moveToNext();
         }
+
+        db.close();
 
         return savedWallpapers;
     }

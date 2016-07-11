@@ -20,6 +20,9 @@ public class WallpaperModel {
         this.b = b;
     }
 
+    public WallpaperModel() {
+    }
+
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
         int color = (int)Long.parseLong(backgroundColor, 16);

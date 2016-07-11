@@ -38,9 +38,11 @@ public class NavigationActivity extends AppCompatActivity
 
     public static final String TAG = "MyRecyclerList";
     private static final String beginning = "https://api.desktoppr.co/1/wallpapers?page=";
-    private List<WallpaperModel> listItemsList = new ArrayList<>();
+    private List<WallpaperModel> httpWallpaperList = new ArrayList<>();
+    private List<WallpaperModel> savedWallpapersList = new ArrayList<>();
+    private RecyclerAdapter httpAdapter;
+    private RecyclerAdapter savedAdapter;
     private RecyclerView mRecyclerView;
-    private RecyclerAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
 
     private Context mContext;
@@ -70,12 +72,16 @@ public class NavigationActivity extends AppCompatActivity
         mContext = NavigationActivity.this;
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        dbManager = new DBManager(mContext, null, null, 1);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerAdapter(mContext, listItemsList, this);
-        mRecyclerView.setAdapter(adapter);
 
-        vr = VolleyRequests.getInstance(mContext, adapter, listItemsList);
+        httpAdapter = new RecyclerAdapter(mContext, httpWallpaperList, this);
+        savedAdapter = new RecyclerAdapter(mContext, dbManager.getSavedWallpapers(), this);
+
+        mRecyclerView.setAdapter(httpAdapter);
+
+        vr = VolleyRequests.getInstance(mContext, httpAdapter, httpWallpaperList);
         vr.updateList();
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
@@ -93,7 +99,6 @@ public class NavigationActivity extends AppCompatActivity
                 swipeRefresh.setRefreshing(false);
             }
         });
-
 
     }
 
@@ -138,7 +143,7 @@ public class NavigationActivity extends AppCompatActivity
         if (id == R.id.nav_wallpapers) {
 
         } else if (id == R.id.nav_save) {
-
+            mRecyclerView.swapAdapter(savedAdapter, true);
         } else if (id == R.id.rate_application) {
 
         }
