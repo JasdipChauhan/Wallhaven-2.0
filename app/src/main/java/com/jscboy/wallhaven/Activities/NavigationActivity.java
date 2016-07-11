@@ -138,7 +138,7 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_wallpapers) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_save) {
 
         } else if (id == R.id.rate_application) {

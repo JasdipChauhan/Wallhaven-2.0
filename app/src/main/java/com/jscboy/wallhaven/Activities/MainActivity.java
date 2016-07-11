@@ -2,7 +2,6 @@ package com.jscboy.wallhaven.Activities;
 
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Database.DBManager;
@@ -32,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
 
     public static final String TAG = "MyRecyclerList";
     private static final String beginning = "https://api.desktoppr.co/1/wallpapers?page=";
-    private List<ListItems> listItemsList = new ArrayList<>();
+    private List<ListItems> retrievedWallpapersList = new ArrayList<>();
+    private List<ListItems> savedWallpapersList=  new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
@@ -57,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerAdapter(MainActivity.this, listItemsList, this);
+        adapter = new RecyclerAdapter(MainActivity.this, retrievedWallpapersList, this);
         mRecyclerView.setAdapter(adapter);
 
-        vr = VolleyRequests.getInstance(MainActivity.this, adapter, listItemsList);
+        vr = VolleyRequests.getInstance(MainActivity.this, adapter, retrievedWallpapersList);
         vr.updateList();
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
@@ -78,10 +77,6 @@ public class MainActivity extends AppCompatActivity implements CallbackInterface
                 swipeRefresh.setRefreshing(false);
             }
         });
-
-        //porting over to a navigation drawer
-        //Intent i = new Intent(this, NavigationActivity.class);
-        //startActivity(i);
     }
 
     //perform the async task that helps with changing the device's wallpaper
