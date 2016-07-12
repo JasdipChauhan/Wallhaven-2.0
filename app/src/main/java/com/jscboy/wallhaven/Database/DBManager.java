@@ -48,8 +48,8 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVEDWALLPAPERS);
-        Log.i("old", oldVersion+"");
-        Log.i("new", newVersion+"");
+        Log.i("old", oldVersion + "");
+        Log.i("new", newVersion + "");
         onCreate(db); // execute new table code when table is upgraded
     }
 
@@ -78,38 +78,32 @@ public class DBManager extends SQLiteOpenHelper {
     //retrieving the saved wallpapers in the database so the list can be inputted into the adapter with ease
     public ArrayList<WallpaperModel> getSavedWallpapers() {
 
-        try {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_SAVEDWALLPAPERS;
 
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
 
-            SQLiteDatabase db = getReadableDatabase();
-            String query = "SELECT * FROM " + TABLE_SAVEDWALLPAPERS;
+        ArrayList<WallpaperModel> savedWallpapers = new ArrayList<>();
 
-            Cursor cursor = db.rawQuery(query, null);
-            cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String url = cursor.getString(cursor.getColumnIndex(COLUMN_WALLPAPERURL));
+            String thumbnail = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAILURL));
+            String resolution = cursor.getString(cursor.getColumnIndex(COLUMN_RESOLUTION));
+            int r = cursor.getInt(cursor.getColumnIndex(COLUMN_R));
+            int g = cursor.getInt(cursor.getColumnIndex(COLUMN_G));
+            int b = cursor.getInt(cursor.getColumnIndex(COLUMN_B));
 
-            ArrayList<WallpaperModel> savedWallpapers = new ArrayList<>();
-
-            while (!cursor.isAfterLast()) {
-                String url = cursor.getString(cursor.getColumnIndex(COLUMN_WALLPAPERURL));
-                String thumbnail = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAILURL));
-                String resolution = cursor.getString(cursor.getColumnIndex(COLUMN_RESOLUTION));
-                int r = cursor.getInt(cursor.getColumnIndex(COLUMN_R));
-                int g = cursor.getInt(cursor.getColumnIndex(COLUMN_G));
-                int b = cursor.getInt(cursor.getColumnIndex(COLUMN_B));
-
-                if (url != null && thumbnail != null && resolution != null) {
-                    savedWallpapers.add(new WallpaperModel(url, thumbnail, resolution, r, g, b));
-                }
-                cursor.moveToNext();
+            if (url != null && thumbnail != null && resolution != null) {
+                savedWallpapers.add(new WallpaperModel(url, thumbnail, resolution, r, g, b));
             }
+            cursor.moveToNext();
+        }
 
-            db.close();
+        db.close();
 
 
-            return savedWallpapers;
-        }catch (Exception e) {};
-
-        return null;
+        return savedWallpapers;
     }
 
 }

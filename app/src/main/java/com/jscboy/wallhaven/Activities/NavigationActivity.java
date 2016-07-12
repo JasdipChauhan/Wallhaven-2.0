@@ -2,7 +2,9 @@ package com.jscboy.wallhaven.Activities;
 
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -141,11 +143,16 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_wallpapers) {
-
+            mRecyclerView.swapAdapter(httpAdapter, true);
+            vr.updateList();
         } else if (id == R.id.nav_save) {
+            savedAdapter.notifyDataSetChanged();
             mRecyclerView.swapAdapter(savedAdapter, true);
         } else if (id == R.id.rate_application) {
-
+            String url = "https://play.google.com/store/apps/details?id=com.jscboy.wallhaven&hl=en";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

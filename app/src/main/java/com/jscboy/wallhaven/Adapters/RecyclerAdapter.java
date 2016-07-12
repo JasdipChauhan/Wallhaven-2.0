@@ -21,6 +21,7 @@ import com.jscboy.wallhaven.Models.WallpaperModel;
 import com.jscboy.wallhaven.Singletons.MySingleton;
 import com.jscboy.wallhaven.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
@@ -96,6 +97,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
                 builder.show();
             }
         });
+    }
+
+    public void updateAdapter() {
+        List<WallpaperModel> tempWallpaperList = new ArrayList<>();
+        for (int i = 0; i < listItemsList.size(); i++) {
+            tempWallpaperList.add(i, listItemsList.get(i));
+        }
+        listItemsList.clear();
+        listItemsList.addAll(tempWallpaperList);
+        this.notifyDataSetChanged();
     }
 
     public void clearAdapter () {
