@@ -143,11 +143,13 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_wallpapers) {
+            httpAdapter.notifyDataSetChanged();
             mRecyclerView.swapAdapter(httpAdapter, true);
             vr.updateList();
         } else if (id == R.id.nav_save) {
+            mRecyclerView.swapAdapter(new RecyclerAdapter(mContext, dbManager.getSavedWallpapers(), null), true); //hacky fix for now
             savedAdapter.notifyDataSetChanged();
-            mRecyclerView.swapAdapter(savedAdapter, true);
+
         } else if (id == R.id.rate_application) {
             String url = "https://play.google.com/store/apps/details?id=com.jscboy.wallhaven&hl=en";
             Intent i = new Intent(Intent.ACTION_VIEW);

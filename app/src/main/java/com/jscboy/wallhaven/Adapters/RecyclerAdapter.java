@@ -14,7 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.jscboy.wallhaven.Database.DBManager;
 import com.jscboy.wallhaven.Interfaces.CallbackInterface;
 import com.jscboy.wallhaven.Models.WallpaperModel;
@@ -26,7 +25,7 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
-    private List<WallpaperModel> listItemsList;
+    private List<WallpaperModel> wallpaperList;
     private Context mContext;
     private ImageLoader mImageLoader;
     private int focusedItem = 0;
@@ -41,7 +40,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     public RecyclerAdapter(Context context, List<WallpaperModel> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
         mContext = context;
-        this.listItemsList = listItemsList;
+        this.wallpaperList = listItemsList;
         dbManager = new DBManager(context, null, null, 1);
     }
 
@@ -56,7 +55,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
     @Override
     public void onBindViewHolder(ListViewRowHolder holder, int position) {
-        final WallpaperModel wallpaperItem = listItemsList.get(position);
+        final WallpaperModel wallpaperItem = wallpaperList.get(position);
         holder.itemView.setSelected(focusedItem == position);
 
         holder.getLayoutPosition();
@@ -78,11 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
             public void onClick(View v) {
 
                 TextView urlTV = (TextView) v.findViewById(R.id.url);
-                TextView resolutionTV = (TextView) v.findViewById(R.id.resolution);
-                NetworkImageView thumbnail = (NetworkImageView) v.findViewById(R.id.network_image);
-
                 final String url = urlTV.getText().toString();
-                final String resolution = resolutionTV.getText().toString();
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Would you like to set this picture as your wallpaper?")
@@ -101,27 +96,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
     public void updateAdapter() {
         List<WallpaperModel> tempWallpaperList = new ArrayList<>();
-        for (int i = 0; i < listItemsList.size(); i++) {
-            tempWallpaperList.add(i, listItemsList.get(i));
+        for (int i = 0; i < wallpaperList.size(); i++) {
+            tempWallpaperList.add(i, wallpaperList.get(i));
         }
-        listItemsList.clear();
-        listItemsList.addAll(tempWallpaperList);
+        wallpaperList.clear();
+        wallpaperList.addAll(tempWallpaperList);
         this.notifyDataSetChanged();
     }
 
     public void clearAdapter () {
-        listItemsList.clear();
+        wallpaperList.clear();
         notifyDataSetChanged();
     }
 
     public void add(WallpaperModel li) {
-        listItemsList.add(li);
-        this.notifyItemInserted(listItemsList.size() - 1);
+        wallpaperList.add(li);
+        this.notifyItemInserted(wallpaperList.size() - 1);
     }
 
     @Override
     public int getItemCount() {
-        return (null != listItemsList ? listItemsList.size() : 0);
+        return (null != wallpaperList ? wallpaperList.size() : 0);
     }
 
     private void setAnimation(View viewToAnimate, int position)
