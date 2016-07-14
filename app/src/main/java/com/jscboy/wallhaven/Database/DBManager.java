@@ -7,14 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.facebook.login.widget.LoginButton;
 import com.jscboy.wallhaven.Models.WallpaperModel;
 
 import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 6; //increment for version control
+    private static final int DATABASE_VERSION = 7; //increment for version control
     private static final String DATABASE_NAME = "wallpapers.db"; //file name stored locally on device
     public static final String TABLE_SAVEDWALLPAPERS = "savedwallpapers"; //table name
     public static final String COLUMN_ID = "_id"; //column #1
@@ -69,10 +68,11 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     //delete wallpaper from db
-    public void deleteWallpaper(String wallpaperURl) {
+    public void deleteWallpaper(WallpaperModel wallpaper) {
+        String wallpaperUrl = wallpaper.getUrl();
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_SAVEDWALLPAPERS + " WHERE " + COLUMN_WALLPAPERURL + "=\""
-                + wallpaperURl + "\";");
+                + wallpaperUrl + "\";");
     }
 
     //retrieving the saved wallpapers in the database so the list can be inputted into the adapter with ease

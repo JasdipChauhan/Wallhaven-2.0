@@ -18,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -53,6 +54,8 @@ public class NavigationActivity extends AppCompatActivity
 
     private DBManager dbManager;
 
+    boolean isOnSavedWallpapers = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +89,27 @@ public class NavigationActivity extends AppCompatActivity
         vr = VolleyRequests.getInstance(mContext, httpAdapter, httpWallpaperList);
         vr.updateList();
 
-        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+        ItemTouchHelper.SimpleCallback onSwipeCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                if (isOnSavedWallpapers) {
+                    WallpaperModel wallpaperModel = savedAdapter.getWallpaperFromIndex(viewHolder.getAdapterPosition());
+                    dbManager.deleteWallpaper(wallpaperModel);
+                }
+            }
+        };
+
+        ItemTouchHelper onSwipeHelper = new ItemTouchHelper(onSwipeCallback);
+        onSwipeHelper.attachToRecyclerView(mRecyclerView);
+
+            mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public synchronized void onLoadMore(int current_page) {
                 vr.updateList();
@@ -146,10 +169,11 @@ public class NavigationActivity extends AppCompatActivity
             httpAdapter.notifyDataSetChanged();
             mRecyclerView.swapAdapter(httpAdapter, true);
             vr.updateList();
+            isOnSavedWallpapers = false;
         } else if (id == R.id.nav_save) {
             mRecyclerView.swapAdapter(new RecyclerAdapter(mContext, dbManager.getSavedWallpapers(), null), true); //hacky fix for now
             savedAdapter.notifyDataSetChanged();
-
+            isOnSavedWallpapers = true;
         } else if (id == R.id.rate_application) {
             String url = "https://play.google.com/store/apps/details?id=com.jscboy.wallhaven&hl=en";
             Intent i = new Intent(Intent.ACTION_VIEW);

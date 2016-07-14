@@ -94,14 +94,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         });
     }
 
-    public void updateAdapter() {
-        List<WallpaperModel> tempWallpaperList = new ArrayList<>();
-        for (int i = 0; i < wallpaperList.size(); i++) {
-            tempWallpaperList.add(i, wallpaperList.get(i));
-        }
-        wallpaperList.clear();
-        wallpaperList.addAll(tempWallpaperList);
-        this.notifyDataSetChanged();
+    public WallpaperModel getWallpaperFromIndex(int position) {
+        return wallpaperList.get(position);
     }
 
     public void clearAdapter () {
