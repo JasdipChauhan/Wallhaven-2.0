@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     private int b;
     private int lastPosition = -1;
     private DBManager dbManager;
+    private String url;
 
     public RecyclerAdapter(Context context, List<WallpaperModel> listItemsList, CallbackInterface mCallback) {
         event = mCallback;
@@ -76,15 +78,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
             @Override
             public void onClick(View v) {
 
-                TextView urlTV = (TextView) v.findViewById(R.id.url);
-                final String url = urlTV.getText().toString();
-
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Would you like to set this picture as your wallpaper?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dbManager.addWallpaper(wallpaperItem);
-                                event.changeWallpaper(url);
+                                event.changeWallpaper(wallpaperItem.getUrl());
+
+                                ArrayList<WallpaperModel> checker = dbManager.getSavedWallpapers();
+                                for (int i =0; i < checker.size(); i++) {
+                                    Log.i("Index " + i + ":", checker.get(i).getUrl());
+                                }
                             }
                         })
                         .setNegativeButton("Cancel", null);
@@ -106,6 +110,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     public void add(WallpaperModel li) {
         wallpaperList.add(li);
         this.notifyItemInserted(wallpaperList.size() - 1);
+    }
+
+    public void delete(int position) {
+        wallpaperList.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override

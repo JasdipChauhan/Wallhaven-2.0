@@ -3,7 +3,9 @@ package com.jscboy.wallhaven.Activities;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +23,8 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.jscboy.wallhaven.Adapters.RecyclerAdapter;
 import com.jscboy.wallhaven.Database.DBManager;
@@ -100,8 +104,13 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (isOnSavedWallpapers) {
+                    savedAdapter.delete(viewHolder.getAdapterPosition());
                     WallpaperModel wallpaperModel = savedAdapter.getWallpaperFromIndex(viewHolder.getAdapterPosition());
                     dbManager.deleteWallpaper(wallpaperModel);
+                    savedAdapter.notifyDataSetChanged();
+                } else {
+                    httpAdapter.delete(viewHolder.getAdapterPosition());
+                    httpAdapter.notifyDataSetChanged();
                 }
             }
         };
@@ -191,8 +200,13 @@ public class NavigationActivity extends AppCompatActivity
         new SetWallpaper().execute(url);
     }
 
-    private int fetchAccentColor() {
-        return ContextCompat.getColor(mContext, R.color.colorAccent);
+    private void makeSnackbar(String message, int colour) {
+        Snackbar snack = Snackbar.make(findViewById(R.id.content_rel_layout), message, Snackbar.LENGTH_SHORT);
+        View view = snack.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        //tv.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+        tv.setTextColor(colour);
+        snack.show();
     }
 
     private class SetWallpaper extends AsyncTask<String, Void, Bitmap> {
@@ -211,8 +225,9 @@ public class NavigationActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Snackbar.make(findViewById(R.id.linLayout), "Changing your wallpaper...",
-                    Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(findViewById(R.id.linLayout), "Changing your wallpaper...",
+            //        Snackbar.LENGTH_SHORT).setActionTextColor(ContextCompat.getColor(NavigationActivity.this, R.color.colorAccent)).show();
+            makeSnackbar("Changing your wallpaper...", Color.WHITE);
             vr.preLoad();
         }
 
@@ -224,8 +239,7 @@ public class NavigationActivity extends AppCompatActivity
             try {
                 wallpaperManager.setBitmap(bitmap);
                 vr.postLoad();
-                Snackbar.make(findViewById(R.id.linLayout), "Enjoy!",
-                        Snackbar.LENGTH_SHORT).show();
+                makeSnackbar("Enjoy!", Color.WHITE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
