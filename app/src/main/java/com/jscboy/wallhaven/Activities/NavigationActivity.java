@@ -225,8 +225,6 @@ public class NavigationActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //Snackbar.make(findViewById(R.id.linLayout), "Changing your wallpaper...",
-            //        Snackbar.LENGTH_SHORT).setActionTextColor(ContextCompat.getColor(NavigationActivity.this, R.color.colorAccent)).show();
             makeSnackbar("Changing your wallpaper...", Color.WHITE);
             vr.preLoad();
         }

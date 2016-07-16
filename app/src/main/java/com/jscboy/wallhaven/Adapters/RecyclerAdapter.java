@@ -62,7 +62,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
 
         holder.getLayoutPosition();
 
-
         mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
 
         holder.thumbnail.setImageUrl(wallpaperItem.getThumbnail(), mImageLoader);
@@ -77,7 +76,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Would you like to set this picture as your wallpaper?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
