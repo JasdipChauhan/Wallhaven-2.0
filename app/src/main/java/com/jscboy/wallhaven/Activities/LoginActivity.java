@@ -7,24 +7,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.jscboy.wallhaven.R;
-import com.facebook.FacebookSdk;
-
 public class LoginActivity extends FragmentActivity {
 
-    private CallbackManager mCallbackManager;
+    //private CallbackManager mCallbackManager;
+
+    //private GoogleSignInOptions mGoogleSignInOptions;
+    //private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
+//         mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+  //              .requestEmail() //specify scopes??
+    //            .build();
+
+        /*mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, (GoogleApiClient.OnConnectionFailedListener) this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, mGoogleSignInOptions)
+                .build();*/
+
+
+        /*FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         AppEventsLogger.activateApp(this);
         mCallbackManager = CallbackManager.Factory.create();
@@ -47,6 +51,6 @@ public class LoginActivity extends FragmentActivity {
             @Override
             public void onError(FacebookException error) {
             }
-        });
+        });*/
     }
 }

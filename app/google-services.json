@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "407276210906",
+    "project_id": "firebase-wallhaven"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407276210906:android:ea8c90ce95003ee4",
+        "android_client_info": {
+          "package_name": "com.jscboy.wallhaven"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407276210906-sas8h9eobmcc1laus0jek14n4jht1gic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jscboy.wallhaven",
+            "certificate_hash": "02170F4F7BE60367824C9D88AA6BC3CF6717256B"
+          }
+        },
+        {
+          "client_id": "407276210906-qd5h64nn7onigvb68teur90a583tfoh6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChqK_aylvjmvmqYNmvawBuOlDKjcmFYOM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

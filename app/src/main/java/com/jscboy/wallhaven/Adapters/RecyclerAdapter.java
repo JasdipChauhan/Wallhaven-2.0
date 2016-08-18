@@ -87,6 +87,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
                                 for (int i =0; i < checker.size(); i++) {
                                     Log.i("Index " + i + ":", checker.get(i).getUrl());
                                 }
+
                             }
                         })
                         .setNegativeButton("Cancel", null);
@@ -108,11 +109,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ListViewRowHolder> {
     public void add(WallpaperModel li) {
         wallpaperList.add(li);
         this.notifyItemInserted(wallpaperList.size() - 1);
+        notifyDataSetChanged();
     }
 
     public void delete(int position) {
+        dbManager.deleteWallpaper(wallpaperList.get(position));
         wallpaperList.remove(position);
         notifyItemRemoved(position);
+        notifyDataSetChanged();
+        Log.i("size of list", wallpaperList.size() + "");
     }
 
     @Override
